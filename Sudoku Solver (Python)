@@ -13,25 +13,18 @@ def canAssign(grid,row,col,num):
                 return False
     return True
     
-def findUnvisited(grid):
+def solveSudoku(grid):
     for row in range(9):
         for col in range(9):
             if grid[row][col]==0:
-                return [True,row,col]
-    return [False,-1,-1]
-    
-def solveSudoku(grid):
-    x=findUnvisited(grid)
-    x,row,col=x[0],x[1],x[2]
-    if x==False:
-        return True
-    for num in range(1,10):
-        if canAssign(grid,row,col,num)==True:
-            grid[row][col]=num
-            if solveSudoku(grid)==True:
-                return True
-            grid[row][col]=0 
-    return False
+                for num in range(1,10):
+                    if canAssign(grid,row,col,num):
+                        grid[row][col]=num
+                        if solveSudoku(grid):
+                            return True
+                        grid[row][col]=0 
+                return False
+    return True
     
 def display(grid):
     for i in grid:
@@ -45,10 +38,12 @@ while True:
     if x==-1:
         break
     grid[i][j]=x
-    
+
+print("Sudoku Board:")
 display(grid)
 
 if solveSudoku(grid)==True:
+    print("Solution:")
     display(grid)
 else:
     print("Can't Solve")
