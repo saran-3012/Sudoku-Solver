@@ -63,10 +63,13 @@ int main()
         for(int j=0;j<9;j++)
             scanf("%d",&grid[i][j]);
     printf("\n");
-    if(solvesudoku(grid))
+    if(solvesudoku(grid)){
+        printf("Solution:\n");
         print(grid);
-    else
+    }
+    else{
         printf("CANNOT BE SOLVED");
+    }
 }
 
 /*
