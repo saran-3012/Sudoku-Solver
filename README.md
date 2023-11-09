@@ -1,85 +1,31 @@
-#include <stdio.h>
-#include <stdlib.h>
+Sudoku Solver Using Backtracking
 
-int grid[9][9];
+Introduction:
+Sudoku is a popular number puzzle game that requires filling a 9x9 grid with digits from 1 to 9. The puzzle is divided into nine 3x3 subgrids, each containing nine cells. The objective is to fill the entire grid in such a way that each row, each column, and each of the nine 3x3 subgrids contain all the numbers from 1 to 9, without any repetition. Solving Sudoku puzzles can be challenging, but one of the most efficient and widely used methods for solving Sudoku puzzles is the Backtracking algorithm.
 
-int startIndex(int x){
-    return 3*(x/3);
-}
+Description:
+The Sudoku Solver using Backtracking is an algorithm that systematically explores different possibilities to find a valid solution for a given Sudoku puzzle. It follows a depth-first search approach, where it fills in the grid one cell at a time, and if it encounters a situation where no valid number can be placed in a cell, it backtracks to the previous cell and explores other possibilities. This process continues until a complete and correct solution is found.
 
-int canassign(int grid[9][9],int rowIndex,int colIndex,int num){
-    for(int i=0;i<9;i++)
-        if(grid[rowIndex][i]==num || grid[i][colIndex]==num)
-            return 0;
-    int x=startIndex(rowIndex),y=startIndex(colIndex);
-    for(int i=x;i<x+3;i++){
-        for(int j=y;j<y+3;j++){
-            if(grid[i][j]==num)
-                return 0;
-        }
-    }
-    return 1;
-}
+Key Steps of the Backtracking Algorithm for Sudoku:
 
-int findunvisited(int grid[9][9],int *row,int *col){
-    for(*row=0;*row<9;(*row)++){
-        for(*col=0;*col<9;(*col)++){
-            if(grid[*row][*col]==0){
-                return 1;
-            }
-        }
-    }
-    return 0;
-}
+1. Start with an incomplete Sudoku puzzle, represented as a 9x9 grid, where empty cells are denoted by 0.
 
-void print(int grid[9][9]){
-    for(int i=0;i<9;i++,printf("\n"))    
-        for(int j=0;j<9;j++)
-            printf("%d ",grid[i][j]);
-    printf("\n");
-}
+2. Find the first empty cell in the grid. If all cells are filled, the puzzle is solved.
 
-int solvesudoku(int grid[9][9]){
-    int row,col;
-    if(!findunvisited(grid,&row,&col)){
-        return 1;
-    }
-    for(int num=1;num<=9;num++){
-        if(canassign(grid,row,col,num)){
-            grid[row][col]=num;
-            if(solvesudoku(grid)){
-                return 1;
-            }
-            grid[row][col]=0;
-        }
-    }
-    return 0;
-}
+3. For the empty cell, try placing each number from 1 to 9, one by one.
 
+4. Check if the number being placed is valid in terms of Sudoku rules (no repetition in the same row, column, or 3x3 subgrid). If it's valid, move on to the next empty cell.
 
-int main()
-{
-    for(int i=0;i<9;i++)    
-        for(int j=0;j<9;j++)
-            scanf("%d",&grid[i][j]);
-    printf("\n");
-    if(solvesudoku(grid))
-        print(grid);
-    else
-        printf("CANNOT BE SOLVED");
-}
+5. If no valid number can be placed in the current cell, backtrack to the previous cell and try the next available number there. Repeat this process until a valid number is found or all possibilities have been exhausted.
 
-/*
-Test Case:
+6. Continue this process of filling, checking, and backtracking until the entire grid is filled with valid numbers, satisfying the Sudoku rules.
 
-0 9 1 2 0 0 8 3 0
-0 0 0 0 0 6 0 0 0
-0 2 0 0 0 9 0 4 7
-0 5 0 0 0 3 0 8 0
-6 0 0 4 1 0 0 0 0
-1 0 0 8 0 0 0 9 5
-0 6 0 9 0 0 0 2 0
-0 0 2 3 0 0 0 0 4
-8 3 0 0 4 0 1 6 0
+7. If the algorithm successfully fills the entire grid without violating any Sudoku rules, a solution is found. If it reaches a point where no valid number can be placed in any cell, indicating an incorrect path, it backtracks further until it finds a valid solution or determines that no solution exists.
 
-*/
+Benefits of Backtracking in Sudoku Solving:
+- Backtracking is an efficient and systematic approach to solving Sudoku puzzles, ensuring that every possibility is explored without redundancy.
+- It guarantees that the final solution is valid and adheres to all Sudoku rules.
+- The algorithm is widely used and can handle even the most complex Sudoku puzzles.
+
+Conclusion:
+The Sudoku Solver using Backtracking is a powerful and versatile algorithm for solving Sudoku puzzles. It leverages a recursive and systematic approach to explore possibilities, ensuring that it eventually reaches a valid solution. Whether you're solving Sudoku puzzles manually or implementing a computer program to do so, the Backtracking algorithm is an essential tool for Sudoku enthusiasts.
